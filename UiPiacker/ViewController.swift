@@ -19,6 +19,8 @@ class ViewController: UIViewController,UIPickerViewDelegate,UIPickerViewDataSour
         pickview.delegate=self
         pickview.dataSource=self
         textfieldforpick.inputView=pickview
+//        textfieldforpick.placeholder = DataModel.getValue(num1: 0, num2: 0, num3: 0)
+        textfieldforpick.text=DataModel.getValue(num1: 0, num2: 0, num3: 0)
         // Do any additional setup after loading the view, typically from a nib.
         let tapgesture = UITapGestureRecognizer(target: self, action: #selector(resignfirstresopnder))
         tapgesture.numberOfTapsRequired=1//default is 1,and we can set 2
@@ -67,6 +69,7 @@ class ViewController: UIViewController,UIPickerViewDelegate,UIPickerViewDataSour
     
     var rowinfirstcomponent = 0
     var rowinsecondcomponentreal = 0
+    var rowinthirdcomponentreal = 0
     var rowinsecondcomponent:Int {
        set {
         rowinsecondcomponentreal=newValue
@@ -76,6 +79,15 @@ class ViewController: UIViewController,UIPickerViewDelegate,UIPickerViewDataSour
             return    rowinsecondcomponentreal<=array1.count-1 ? rowinsecondcomponentreal : array1.count-1
         }
     }
+    var rowinthirdcomponent:Int {
+        set {
+            rowinthirdcomponentreal=newValue
+        }
+        get{
+            //            print(rowinsecondcomponentreal<=array1.count ? rowinsecondcomponentreal : array1.count)
+            return    rowinthirdcomponentreal<=array2.count-1 ? rowinthirdcomponentreal : array2.count-1
+        }
+    }
     
     
     public func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int){
@@ -83,10 +95,16 @@ class ViewController: UIViewController,UIPickerViewDelegate,UIPickerViewDataSour
             array1=DataModel.getSecondfKeys(num1: row)
             array2 = DataModel.getThirdfKeys(num1: row, num2: rowinsecondcomponent)
             rowinfirstcomponent=row
-        }else  {
+            textfieldforpick.text=DataModel.getValue(num1: row, num2: rowinsecondcomponent, num3: rowinthirdcomponent) ?? ""
+        }else if component==1 {
             array2 = DataModel.getThirdfKeys(num1: rowinfirstcomponent, num2: row)
             rowinsecondcomponent=row
+            textfieldforpick.text=DataModel.getValue(num1: rowinfirstcomponent, num2: row, num3: rowinthirdcomponent) ?? ""
+        }else{
+            textfieldforpick.text=DataModel.getValue(num1: rowinfirstcomponent, num2: rowinsecondcomponent, num3: row) ?? ""
+            rowinthirdcomponent=row
         }
+        
         
     }
     func resignfirstresopnder(sender:UITapGestureRecognizer)  {

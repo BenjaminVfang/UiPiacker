@@ -8,7 +8,7 @@
 
 import Foundation
 class DataModel {
-    static let datesoureforpickview:[String : [String:[String]]] = ["力学计量":["压力表":["FP1a","FP1b","FP1c"],"氩气减压器":["FF12"],"3个怎么办":["1","2","3"]],"长度计量":["游标卡尺":["0-5mm","6-10mm"],"平板":["平板"]]]
+    static let datesoureforpickview:[String : [String:[String]]] = ["力学计量":["压力表":["FP1a","FP1b","FP1c"],"氩气减压器":["FF12"],"3个怎么办":["one","two","three"]],"长度计量":["游标卡尺":["0-5mm","6-10mm"],"平板":["平板"]]]
     static public func getFirstKeys() -> [String] {
         return datesoureforpickview.keys.sorted()
     }
@@ -21,6 +21,12 @@ class DataModel {
         let key2 = datesoureforpickview[key1]!.keys.sorted()[num2]
         return datesoureforpickview[key1]?[key2] ?? [""]
     }
+    static public func getValue(num1:Int,num2:Int,num3:Int) -> String? {
+        let key1 = datesoureforpickview.keys.sorted()[num1]
+        let key2 = datesoureforpickview[key1]!.keys.sorted()[num2]
+        return (datesoureforpickview[key1]?[key2]?[num3])
+    }
+
     
     
 }
